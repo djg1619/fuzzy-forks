@@ -1,0 +1,86 @@
+from bs4 import BeautifulSoup
+import requests
+import webbrowser
+
+url = 'https://www.cdc.gov/coronavirus/2019-ncov/locations-confirmed-cases.html'
+
+response = requests.get(url)
+
+soup = BeautifulSoup(response.text, 'html.parser')
+
+region = soup.find_all('p')
+
+country = soup.find_all('ul')
+
+areas = ['Africa','Americas','Eastern Mediterranean','Europe','South-East Asia','Western Pacific']
+
+# all functions
+def africa():
+    print(areas[0])
+    for country in soup.find_all('ul')[2:3]:
+        print(country.text)
+
+def americas():
+    print(areas[1])
+    for country in soup.find_all('ul')[3:4]:
+        print(country.text)
+
+def mediterranean():
+    print(areas[2])
+    for country in soup.find_all('ul')[4:5]:
+        print(country.text)
+
+def europe():
+    print(areas[3])
+    for country in soup.find_all('ul')[5:7]:
+        print(country.text)
+
+def asia():
+    print(areas[4])
+    for country in soup.find_all('ul')[7:8]:
+        print(country.text)
+
+def pacific():
+    print(areas[5])
+    for country in soup.find_all('ul')[8:9]:
+        print(country.text)
+        
+def intro():
+    print('Hello and thank you for viewing my project. All information provided by the CDC.')
+    print('This project will be automatically updated on Mondays, Wednesdays, and Fridays.')
+    print('Numbers close out at 4 p.m. the day before reporting.')
+
+def choice():
+    print(areas)
+    while True:
+        selected_area = input('\nPlease enter which region from the list above that you are interested in to report all countries with confirmed COVID-19 cases.').lower()
+        if selected_area == 'africa':
+            return africa()
+        if selected_area == 'americas':
+            return americas()
+        if 'mediterranean' in selected_area:
+            return mediterranean()
+        if selected_area == 'europe':
+            return europe()
+        if 'asia' in selected_area:
+            return asia()
+        if 'pacific' in selected_area:
+            return pacific()
+        if selected_area not in areas:
+            print('Please check your spelling and try again; capitalization is not important.')
+            continue
+
+def outro():
+    return input('If you would like to view more areas enter yes. Enter no to exit.').lower().startswith('y')
+
+def link():
+    return input('Please enter yes if you would like to open the CDC website in a new window.').lower().startswith('y')
+
+#loop sequence
+while True:
+    intro()
+    choice()
+    if link():
+        webbrowser.open("https://www.cdc.gov/coronavirus/2019-ncov/locations-confirmed-cases.html")
+    if not outro():
+        break
