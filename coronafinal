@@ -37,12 +37,12 @@ def europe():
 
 def asia():
     print(areas[4])
-    for country in soup.find_all('ul')[7:8]:
+    for country in soup.find_all('ul')[6:7]:
         print(country.text)
 
 def pacific():
     print(areas[5])
-    for country in soup.find_all('ul')[8:9]:
+    for country in soup.find_all('ul')[7:8]:
         print(country.text)
         
 def intro():
